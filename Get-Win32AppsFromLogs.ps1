@@ -1,4 +1,28 @@
-﻿$allLogspath=Get-ChildItem "C:\ProgramData\Microsoft\IntuneManagementExtension\Logs" | where {$_.name -match "IntuneManagementExtension"} | select -ExpandProperty fullname
+<#
+.SYNOPSIS
+    Get Win32 Apps deployed on the Machine from IntuneManagementExtension Log
+
+.DESCRIPTION
+    This script will get all the Win32 Apps deployed from the IntuneManagementExtension Logs along with the App id
+    
+.NOTES
+    FileName:    Get-Win32AppsFromLogs.ps1
+    Author:      Nakul Bhargava
+    Date:        19 Jan 2024
+
+.PARAMETER Log Folder
+        The path the script will look for is C:\ProgramData\Microsoft\IntuneManagementExtension\Logs
+
+
+
+.EXAMPLE
+    .\Get-Win32AppsFromLogs.ps1
+
+
+    
+#>
+
+$allLogspath=Get-ChildItem "C:\ProgramData\Microsoft\IntuneManagementExtension\Logs" | where {$_.name -match "IntuneManagementExtension"} | select -ExpandProperty fullname
 foreach($logs in $allLogspath)
     {
     $allLogs=Get-Content $logs
@@ -21,4 +45,3 @@ foreach($logs in $allLogspath)
   
 }
  $selectedApp= $finObj | select -Unique -Property Name,AppID | Out-GridView -Title "Win32 Apps in these Logs" -PassThru
- $selectedApp
